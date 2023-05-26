@@ -41,7 +41,6 @@
 # | 100001 |  000000  | Return previous calculation         |
 # +--------+----------+-------------------------------------+
 
-# When a user creates calculator, it will store their name
 class UltraSuperCalculator:
   def __init__(self, name) -> None:
     self.name = name
@@ -103,6 +102,56 @@ class UltraSuperCalculator:
     self.history_index += 1
     # Ensure that after each calculation, history starts at right location
     self.temp_history_index = self.history_index
+
+  # Adds numbers stored in registers
+  def add(self, address_num1, address_num2):
+    # Load values
+    num1 = self.load_value_from_register(address_num1)
+    num2 = self.load_value_from_register(address_num2)
+
+    # Perform calculation
+    calculated_value = num1 + num2
+
+    return calculated_value
+
+  # Subtracts numbers stored in registers
+  def subtract(self, address_num1, address_num2):
+    # Load values
+    num1 = self.load_value_from_register(address_num1)
+    num2 = self.load_value_from_register(address_num2)
+
+    # Perform calculation
+    calculated_value = num1 - num2
+
+    return calculated_value
+
+  # Multiplies numbers stored in registers
+  def multiply(self, address_num1, address_num2):
+    # Load values
+    num1 = self.load_value_from_register(address_num1)
+    num2 = self.load_value_from_register(address_num2)
+
+    # Perform calculation
+    calculated_value = num1 * num2
+
+    return calculated_value
+
+  # Divides numbers stored in registers
+  def divide(self, address_num1, address_num2):
+    # Load values
+    num1 = self.load_value_from_register(address_num1)
+    num2 = self.load_value_from_register(address_num2)
+
+    calculated_value = 0
+
+    # Check for division by 0
+    if(num2 != 0):
+      calculated_value = int(num1 / num2)
+    else:
+      print(f"Division by 0 error: {num1}/{num2}.")
+
+    # Returns 0 if dividing by zero
+    return calculated_value
 
 # Main Program
 new_calculator = UltraSuperCalculator("Nick")
