@@ -41,6 +41,9 @@
 # | 100001 |  000000  | Return previous calculation         |
 # +--------+----------+-------------------------------------+
 
+#######################################################
+# Class: UltraSuperCalculator
+#######################################################
 class UltraSuperCalculator:
   def __init__(self, name) -> None:
     self.name = name
@@ -60,13 +63,19 @@ class UltraSuperCalculator:
 
     self.update_display(f"Hello {self.name}! Welcome to the USCC.")
   
+  #######################################################
+  # Function: update_display
   # Change the user_display and print to the console
+  #######################################################
   def update_display(self, to_update):
     self.user_display = to_update
 
     print(self.user_display)
   
+  #######################################################
+  # Function: store_value_to_register
   # Stores values to the numbers register
+  #######################################################  
   def store_value_to_register(self, value_to_store):
     # If all registers are full, start overwriting oldest registers
     if(self.numbers_index > 21):
@@ -79,8 +88,11 @@ class UltraSuperCalculator:
 
     self.numbers_index += 1
 
+  #######################################################
+  # Function: load_value_from_register
   # Loads a value from the register
   # For use with actual calculation methods
+  #######################################################  
   def load_value_from_register(self, register_address):
     # Convert register address binary to int
     index = int(register_address)
@@ -90,7 +102,10 @@ class UltraSuperCalculator:
 
     return int_value
 
+  #######################################################
+  # Function: store_to_history_register
   # Stores result in history register
+  #######################################################  
   def store_to_history_register(self, result_to_store):
     # If all history registers are full, start overwriting oldest registers
     if(self.history_index > 9):
@@ -103,7 +118,10 @@ class UltraSuperCalculator:
     # Ensure that after each calculation, history starts at right location
     self.temp_history_index = self.history_index
 
+  #######################################################
+  # Function: add
   # Adds numbers stored in registers
+  #######################################################  
   def add(self, address_num1, address_num2):
     # Load values
     num1 = self.load_value_from_register(address_num1)
@@ -114,7 +132,10 @@ class UltraSuperCalculator:
 
     return calculated_value
 
+  #######################################################
+  # Function: subtract
   # Subtracts numbers stored in registers
+  ####################################################### 
   def subtract(self, address_num1, address_num2):
     # Load values
     num1 = self.load_value_from_register(address_num1)
@@ -125,7 +146,10 @@ class UltraSuperCalculator:
 
     return calculated_value
 
+  #######################################################
+  # Function: multiply
   # Multiplies numbers stored in registers
+  ####################################################### 
   def multiply(self, address_num1, address_num2):
     # Load values
     num1 = self.load_value_from_register(address_num1)
@@ -136,7 +160,10 @@ class UltraSuperCalculator:
 
     return calculated_value
 
+  #######################################################
+  # Function: multiply
   # Divides numbers stored in registers
+  ####################################################### 
   def divide(self, address_num1, address_num2):
     # Load values
     num1 = self.load_value_from_register(address_num1)
@@ -153,7 +180,10 @@ class UltraSuperCalculator:
     # Returns 0 if dividing by zero
     return calculated_value
 
+  #######################################################
+  # Function: get_last_calculation
   # Returns the last calculated value
+  ####################################################### 
   def get_last_calculation(self):
     # Look backwards
     self.temp_history_index -= 1
@@ -163,7 +193,10 @@ class UltraSuperCalculator:
 
     self.update_display(last_value)
 
+  #######################################################
+  # Function: binary_reader
   # Process binary data coming in from user
+  ####################################################### 
   def binary_reader(self, instruction):
     # Check if valid instruction length
     if(len(instruction) != 32):
@@ -209,7 +242,9 @@ class UltraSuperCalculator:
     self.update_display(f"Calculated Result: {result}")
     
 
-# Main Program
+#######################################################
+####################################################### 
+
 new_calculator = UltraSuperCalculator("Nick")
 
 # Adds 5 and 10 to number registers
