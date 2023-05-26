@@ -66,7 +66,43 @@ class UltraSuperCalculator:
     self.user_display = to_update
 
     print(self.user_display)
+  
+  # Stores values to the numbers register
+  def store_value_to_register(self, value_to_store):
+    # If all registers are full, start overwriting oldest registers
+    if(self.numbers_index > 21):
+      self.numbers_index = 1
+    
+    # Convert binary value to integer and store in numbers register
+    self.number_registers[self.numbers_index] = int(value_to_store, 2)
 
+    print(f"The number {self.number_registers[self.numbers_index]} was stored to register {self.numbers_index}")
 
-# Instantiate a new calculator
+    self.numbers_index += 1
+
+  # Loads a value from the register
+  # For use with actual calculation methods
+  def load_value_from_register(self, register_address):
+    # Convert register address binary to int
+    index = int(register_address)
+
+    # Retrieve the number at the specified address
+    int_value = int(self.number_registers[index])
+
+    return int_value
+
+  # Stores result in history register
+  def store_to_history_register(self, result_to_store):
+    # If all history registers are full, start overwriting oldest registers
+    if(self.history_index > 9):
+      self.history_index = 0
+
+    # Convert result to a binary and store in history register
+    self.history_registers[self.history_index] = bin(result_to_store)
+
+    self.history_index += 1
+    # Ensure that after each calculation, history starts at right location
+    self.temp_history_index = self.history_index
+
+# Main Program
 new_calculator = UltraSuperCalculator("Nick")
