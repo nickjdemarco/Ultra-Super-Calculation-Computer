@@ -159,9 +159,70 @@ class UltraSuperCalculator:
     self.temp_history_index -= 1
 
     # Formulate message with last calculated value in history register
-    last_value = f"Last Calculated Value: {int(self.history_registers[self.temp_history_index])}"
+    last_value = f"Last Calculated Value: {int(self.history_registers[self.temp_history_index], 2)}"
 
     self.update_display(last_value)
 
+  # Process binary data coming in from user
+  def binary_reader(self, instruction):
+    # Check if valid instruction length
+    if(len(instruction) != 32):
+      self.update_display("Invalid Instruction Length")
+      return
+
+    # Break up instruction into its separate parts
+    opcode = instruction[0 : 6]
+    source_one = instruction[6 : 11]
+    source_two = instruction[11 : 16]
+    store = instruction[16 : 26]
+    function_code = instruction[26:]
+
+    # Process opcode
+    if(opcode == '000001'):
+      self.store_value_to_register(store)
+      return
+    elif(opcode == '100001'):
+      self.get_last_calculation()
+      return
+    elif(opcode != '000000'):
+      self.update_display("Invalid OPCODE")
+      return
+
+    result = 0
+
+    if(function_code == '100000'):
+      result = self.add(source_one, source_two)
+    elif(function_code == '100010'):
+      result = self.subtract(source_one, source_two)
+    elif(function_code == '011000'):
+      result = self.multiply(source_one, source_two)
+    elif(function_code == '011010'):
+      result = self.divide(source_one, source_two)
+    else:
+      self.update_display("Invalid Function Code")
+      return
+
+    # Store result to history register
+    self.store_to_history_register(result)
+
+    # Display calculated result
+    self.update_display(f"Calculated Result: {result}")
+    
+
 # Main Program
 new_calculator = UltraSuperCalculator("Nick")
+
+# Adds 5 and 10 to number registers
+new_calculator.binary_reader("00000100000000000000000101000000")
+new_calculator.binary_reader("00000100000000000000001010000000")
+ 
+# Adds/Subtracts/Multiplies/Divides 5 and 10 from registers
+new_calculator.binary_reader("00000000001000100000000000100000")
+new_calculator.binary_reader("00000000001000100000000000100010")
+new_calculator.binary_reader("00000000001000100000000000011000")
+new_calculator.binary_reader("00000000001000100000000000011010")
+ 
+# Gets the last three calculations
+new_calculator.binary_reader("10000100000000000000000000000000")
+new_calculator.binary_reader("10000100000000000000000000000000")
+new_calculator.binary_reader("10000100000000000000000000000000")
