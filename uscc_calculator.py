@@ -57,4 +57,16 @@ class UltraSuperCalculator:
     self.temp_history_index = 0
 
     # Data that will be returned to user
-    self.display = ''
+    self.user_display = ''
+
+    self.update_display(f"Hello {self.name}! Welcome to the USCC.")
+  
+  # Change the user_display and print to the console
+  def update_display(self, to_update):
+    self.user_display = to_update
+
+    print(self.user_display)
+
+
+# Instantiate a new calculator
+new_calculator = UltraSuperCalculator("Nick")
