@@ -153,5 +153,15 @@ class UltraSuperCalculator:
     # Returns 0 if dividing by zero
     return calculated_value
 
+  # Returns the last calculated value
+  def get_last_calculation(self):
+    # Look backwards
+    self.temp_history_index -= 1
+
+    # Formulate message with last calculated value in history register
+    last_value = f"Last Calculated Value: {int(self.history_registers[self.temp_history_index])}"
+
+    self.update_display(last_value)
+
 # Main Program
 new_calculator = UltraSuperCalculator("Nick")
